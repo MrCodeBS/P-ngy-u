@@ -31,6 +31,16 @@ def get_news_headlines():
     
     return response
 
+def get_personalized_response(user_input):
+    # Add more personalized responses based on specific keywords or topics
+    if 'hello' in user_input.lower() or 'hi' in user_input.lower() or 'hey' in user_input.lower():
+        return "Hey there, friend! How's your day going?"
+    elif 'thanks' in user_input.lower() or 'thank you' in user_input.lower():
+        return "You're welcome! It's always a pleasure to help out. 😊"
+    else:
+        # If no specific keyword matches, provide a general response
+        return "That's interesting! Tell me more about it."
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -50,11 +60,14 @@ def get_response():
         except wikipedia.exceptions.PageError:
             response = "I'm sorry, I couldn't find any information on that topic."
     elif 'sad' in user_input.lower():
-        # If the user mentions feeling sad, offer support
-        response = "I'm here for you. If you want to talk about it, I'm all ears."
+        # If the user mentions feeling sad, offer support and encouragement
+        response = "I'm here for you, my friend. Feeling down can be tough, but remember, you're not alone. I'm here to chat, lend an ear, or share a smile whenever you need it."
+    elif 'lonely' in user_input.lower() or 'alone' in user_input.lower() or 'shy' in user_input.lower():
+        # If the user mentions feeling lonely or shy, offer companionship and understanding
+        response = "I understand how it feels to be lonely or shy. But hey, you're not alone now! I'm here to keep you company, chat about anything, or just listen if you need someone to talk to."
     else:
-        # For other inputs, provide a friendly response
-        response = "Hey there! Thanks for reaching out. Let's chat! Did you hear about the latest news headlines?"
+        # For other inputs, provide a friendly and engaging response
+        response = get_personalized_response(user_input)
     
     return jsonify({'response': response})
 
