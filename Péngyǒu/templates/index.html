@@ -1,3 +1,4 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,10 +8,14 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <div class="chat-container">
-        <div id="chat-box"></div>
-        <input type="text" id="user-input" placeholder="Type your message...">
-        <button onclick="sendMessage()">Send</button>
+    <div class="container">
+        <div class="chat-container">
+            <div id="chat-box"></div>
+            <div class="input-container">
+                <input type="text" id="user-input" placeholder="Type your message...">
+                <button onclick="sendMessage()">Send</button>
+            </div>
+        </div>
     </div>
     <script>
         function sendMessage() {
@@ -18,7 +23,7 @@
             if (userInput.trim() === "") {
                 return;
             }
-            document.getElementById("chat-box").innerHTML += "<p><strong>You:</strong> " + userInput + "</p>";
+            document.getElementById("chat-box").innerHTML += `<div class="user-message"><strong>You:</strong> ${userInput}</div>`;
             document.getElementById("user-input").value = "";
             fetch("/get_response", {
                 method: 'POST',
@@ -29,7 +34,7 @@
             })
             .then(response => response.json())
             .then(data => {
-                document.getElementById("chat-box").innerHTML += "<p><strong>Péngyǒu:</strong> " + data.response + "</p>";
+                document.getElementById("chat-box").innerHTML += `<div class="bot-message"><strong>Péngyǒu:</strong> ${data.response}</div>`;
             });
         }
     </script>
